@@ -5,20 +5,20 @@
   
 
   
-  <title>Hello World | Leo&#39;s Blog</title>
+  <title>Java设计模式学习（0） | Leo&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
-<meta name="keywords" content="Hexo">
+  <meta name="description" content="前言 设计模式(Design Pattern)是一套被反复使用、多数人知晓的、经过  分类编目的、代码设计经验的总结，使用设计模式是为了可重用代码、让代码更容易被他人  理解并且保证代码可靠性。">
+<meta name="keywords" content="design-pattern">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="https://fei922.github.io/2018/07/31/hello-world/index.html">
+<meta property="og:title" content="Java设计模式学习（0）">
+<meta property="og:url" content="https://fei922.github.io/2018/08/02/design-pattern00/index.html">
 <meta property="og:site_name" content="Leo&#39;s Blog">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
+<meta property="og:description" content="前言 设计模式(Design Pattern)是一套被反复使用、多数人知晓的、经过  分类编目的、代码设计经验的总结，使用设计模式是为了可重用代码、让代码更容易被他人  理解并且保证代码可靠性。">
 <meta property="og:locale" content="zh-cn">
-<meta property="og:updated_time" content="2018-08-02T05:12:46.695Z">
+<meta property="og:updated_time" content="2018-08-03T00:43:05.334Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
+<meta name="twitter:title" content="Java设计模式学习（0）">
+<meta name="twitter:description" content="前言 设计模式(Design Pattern)是一套被反复使用、多数人知晓的、经过  分类编目的、代码设计经验的总结，使用设计模式是为了可重用代码、让代码更容易被他人  理解并且保证代码可靠性。">
   
     <link rel="alternate" href="/atom.xml" title="Leo&#39;s Blog" type="application/atom+xml">
   
@@ -96,11 +96,11 @@ var _hmt = _hmt || [];
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-design-pattern00" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     
-<a href="/2018/07/31/hello-world/" class="article-date">
-  <time datetime="2018-07-31T12:16:21.000Z" itemprop="datePublished">2018-07-31</time>
+<a href="/2018/08/02/design-pattern00/" class="article-date">
+  <time datetime="2018-08-02T11:22:38.000Z" itemprop="datePublished">2018-08-02</time>
 </a>
 
 
@@ -113,7 +113,7 @@ var _hmt = _hmt || [];
         
   
     <h1 class="article-title" itemprop="name">
-      Hello World
+      Java设计模式学习（0）
     </h1>
   
 
@@ -125,20 +125,51 @@ var _hmt = _hmt || [];
 		<div id="toc" class="toc-article">
 			<h2 class="toc-title"><span>Contents</span></h2>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">2.</span> <span class="toc-text">参考资料</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设计模式有哪些"><span class="toc-number">3.</span> <span class="toc-text">设计模式有哪些</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建型设计模式-5个"><span class="toc-number">3.1.</span> <span class="toc-text">创建型设计模式 5个</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#结构型设计模式-7个"><span class="toc-number">3.2.</span> <span class="toc-text">结构型设计模式 7个</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#行为型设计模式-11个"><span class="toc-number">3.3.</span> <span class="toc-text">行为型设计模式 11个</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#题外话"><span class="toc-number">4.</span> <span class="toc-text">题外话</span></a></li></ol>
 		
 		</div>
 		
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<a id="more"></a>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>设计模式(Design Pattern)是一套被反复使用、多数人知晓的、经过<br>  分类编目的、代码设计经验的总结，使用设计模式是为了可重用代码、让代码更容易被他人<br>  理解并且保证代码可靠性。</p>
+</blockquote>
+<a id="more"></a>  
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="https://blog.csdn.net/lovelion/article/details/17517213" target="_blank" rel="noopener">史上最全设计模式导学目录（完整版）</a>, <a href="https://legacy.gitbook.com/book/quanke/design-pattern-java/details" target="_blank" rel="noopener">GitBook下载地址</a></li>
+<li><a href="http://down.51cto.com/data/2336257" target="_blank" rel="noopener">图解设计模式([日] 结城浩)</a></li>
+<li><a href="http://www.cnblogs.com/justinw/archive/2006/11/28/574573.html" target="_blank" rel="noopener">模式和原则</a></li>
+</ul>
+<h2 id="设计模式有哪些"><a href="#设计模式有哪些" class="headerlink" title="设计模式有哪些"></a>设计模式有哪些</h2><h3 id="创建型设计模式-5个"><a href="#创建型设计模式-5个" class="headerlink" title="创建型设计模式 5个"></a>创建型设计模式 5个</h3><ul>
+<li><a href="/2018/08/02/design-pattern01/#singleton">Singleton(单例模式)</a></li>
+<li>Factory Method(工厂方法模式)</li>
+<li>Abstract Factory(抽象工厂模式)</li>
+<li>Builder(建造者模式)</li>
+<li>Prototype(模式)</li>
+</ul>
+<h3 id="结构型设计模式-7个"><a href="#结构型设计模式-7个" class="headerlink" title="结构型设计模式 7个"></a>结构型设计模式 7个</h3><ul>
+<li>Adapter</li>
+<li>Bridge</li>
+<li>Composite</li>
+<li>Decorator</li>
+<li>Facade</li>
+<li>Flyweight</li>
+<li>Proxy</li>
+</ul>
+<h3 id="行为型设计模式-11个"><a href="#行为型设计模式-11个" class="headerlink" title="行为型设计模式 11个"></a>行为型设计模式 11个</h3><ul>
+<li>Chain of Responsibility</li>
+<li>Command</li>
+<li>Interpreter</li>
+<li>Iterator</li>
+<li>Mediator</li>
+<li>Memento</li>
+<li>Observer</li>
+<li>State</li>
+<li>Strategy</li>
+<li>Template Method</li>
+<li>Visitor</li>
+</ul>
+<h2 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h2><p>16年上半年，还在实习那会，领导交给我一个任务，让我整理23种设计模式，当时也是参考了上面的博客，以及《Header First设计模式》<br>，不过仍然向看天书一样，足足看了大半个月，也只能算是一知半解。</p>
+<p>随着工作经验和能力的积累，现在再回过头来看设计模式，发现原来平时的代码中就已经蕴含了许多设计模式，<br>比如我们的项目里面获取properties配置信息，就是使用的单例模式。</p>
+<p>多学多看多练(^o^)/</p>
 
       
     </div>
@@ -149,11 +180,11 @@ var _hmt = _hmt || [];
 	  <!-- 百度分享 End -->
 	  
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/">Hexo</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design-pattern</a></li></ul>
 
 	  
 <span>
-Updated:<time datetime="2018-08-02T05:12:46.695Z" itemprop="dateModified">2018-08-02</time>
+Updated:<time datetime="2018-08-03T00:43:05.334Z" itemprop="dateModified">2018-08-03</time>
 </span>
 
 
@@ -163,15 +194,20 @@ Updated:<time datetime="2018-08-02T05:12:46.695Z" itemprop="dateModified">2018-0
     
 <nav id="article-nav">
   
-    <a href="/2018/08/01/first/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/08/02/design-pattern01/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          Hexo Landscape-F主题Blog搭建
+          Java设计模式学习（一）
         
       </div>
     </a>
   
+  
+    <a href="/2018/08/01/first/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hexo Landscape-F主题Blog搭建</div>
+    </a>
   
 </nav>
 
@@ -184,7 +220,7 @@ Updated:<time datetime="2018-08-02T05:12:46.695Z" itemprop="dateModified">2018-0
   <div id="toc" class="toc-aside">
   <h2 class="toc-title">Contents</h2>
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">2.</span> <span class="toc-text">参考资料</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设计模式有哪些"><span class="toc-number">3.</span> <span class="toc-text">设计模式有哪些</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建型设计模式-5个"><span class="toc-number">3.1.</span> <span class="toc-text">创建型设计模式 5个</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#结构型设计模式-7个"><span class="toc-number">3.2.</span> <span class="toc-text">结构型设计模式 7个</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#行为型设计模式-11个"><span class="toc-number">3.3.</span> <span class="toc-text">行为型设计模式 11个</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#题外话"><span class="toc-number">4.</span> <span class="toc-text">题外话</span></a></li></ol>
     
   </div>
 

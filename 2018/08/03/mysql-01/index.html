@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>mysql常用命令整理(一) | Leo&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言今天被拉到其他组支援，在Centos上部署mysql。领导提出了一些以前没有接触过的要求，get到一些新技能，抓紧记录一下哈哈">
+<meta name="keywords" content="mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql常用命令整理(一)">
+<meta property="og:url" content="https://fei922.github.io/2018/08/03/mysql-01/index.html">
+<meta property="og:site_name" content="Leo&#39;s Blog">
+<meta property="og:description" content="前言今天被拉到其他组支援，在Centos上部署mysql。领导提出了一些以前没有接触过的要求，get到一些新技能，抓紧记录一下哈哈">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:updated_time" content="2018-08-03T13:13:50.883Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mysql常用命令整理(一)">
+<meta name="twitter:description" content="前言今天被拉到其他组支援，在Centos上部署mysql。领导提出了一些以前没有接触过的要求，get到一些新技能，抓紧记录一下哈哈">
+  
+    <link rel="alternate" href="/atom.xml" title="Leo&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?47243f749252bb19a8513b675d5a7411";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Leo&#39;s Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Great things are done by a series of small things brought together</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-github-link" class="nav-icon" href="https://github.com/fei922" title="Github" target="_blank"></a>
+        
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://fei922.github.io"></form>
+      </div>
+    </div>
+  </div>
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?47243f749252bb19a8513b675d5a7411";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-mysql-01" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+<a href="/2018/08/03/mysql-01/" class="article-date">
+  <time datetime="2018-08-03T11:53:16.000Z" itemprop="datePublished">2018-08-03</time>
+</a>
+
+
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      mysql常用命令整理(一)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+		
+		<div id="toc" class="toc-article">
+			<h2 class="toc-title"><span>Contents</span></h2>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用命令"><span class="toc-number">2.</span> <span class="toc-text">常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建mysql用户并设置密码"><span class="toc-number">2.1.</span> <span class="toc-text">创建mysql用户并设置密码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#给用户添加权限"><span class="toc-number">2.2.</span> <span class="toc-text">给用户添加权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除用户"><span class="toc-number">2.3.</span> <span class="toc-text">删除用户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取mysql存储路径"><span class="toc-number">2.4.</span> <span class="toc-text">获取mysql存储路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mysql可以运行成功但无法用命令登录的问题"><span class="toc-number">2.5.</span> <span class="toc-text">mysql可以运行成功但无法用命令登录的问题</span></a></li></ol></li></ol>
+		
+		</div>
+		
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>今天被拉到其他组支援，在Centos上部署mysql。领导提出了一些以前没有接触过的要求，get到一些新技能，抓紧记录一下哈哈</p>
+<a id="more"></a>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><h3 id="创建mysql用户并设置密码"><a href="#创建mysql用户并设置密码" class="headerlink" title="创建mysql用户并设置密码"></a>创建mysql用户并设置密码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CREATE USER &apos;username&apos;@&apos;%&apos; IDENTIFIED BY &apos;user_password&apos;;</span><br><span class="line"> &apos;%&apos;          任何情况都能访问</span><br><span class="line"> &apos;localhost&apos;   只有本机才能访问</span><br><span class="line"> &apos;192.168.30.1&apos; 执行ip才能访问</span><br></pre></td></tr></table></figure>
+<h3 id="给用户添加权限"><a href="#给用户添加权限" class="headerlink" title="给用户添加权限"></a>给用户添加权限</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grant all privileges on database_name.* to &apos;username&apos;@&apos;%&apos;;</span><br><span class="line"># all 可以替换为 select,delete,update,create,drop</span><br></pre></td></tr></table></figure>
+<h3 id="删除用户"><a href="#删除用户" class="headerlink" title="删除用户"></a>删除用户</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Delete FROM mysql.user Where User=&apos;user1&apos;;</span><br></pre></td></tr></table></figure>
+<h3 id="获取mysql存储路径"><a href="#获取mysql存储路径" class="headerlink" title="获取mysql存储路径"></a>获取mysql存储路径</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show global variables like &quot;%datadir%&quot;;</span><br><span class="line"></span><br><span class="line">+---------------+---------------------------------------------+</span><br><span class="line">| Variable_name | Value                                       |</span><br><span class="line">+---------------+---------------------------------------------+</span><br><span class="line">| datadir       | C:\ProgramData\MySQL\MySQL Server 5.6\Data\ |</span><br><span class="line">+---------------+---------------------------------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line"># 该路径可以在mysql配置文件my.cnf文件里配置</span><br><span class="line">[mysqld]</span><br><span class="line">datadir=/home/mysql/mysql/data</span><br><span class="line"></span><br><span class="line"># 设定utf8编码，可以分别在client和mysql下设置以下值</span><br><span class="line">default-character-set=utf8</span><br></pre></td></tr></table></figure>
+<h3 id="mysql可以运行成功但无法用命令登录的问题"><a href="#mysql可以运行成功但无法用命令登录的问题" class="headerlink" title="mysql可以运行成功但无法用命令登录的问题"></a>mysql可以运行成功但无法用命令登录的问题</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mysql -uroot -p   # 执行该命令输入密码后报如下错误</span><br><span class="line">Can&apos;t connect to local MySQL server through socket</span><br></pre></td></tr></table></figure>
+<p>后来发现mysql未能正常运行，参考<a href="https://blog.csdn.net/lmss82/article/details/4414178/" target="_blank" rel="noopener">ERROR 2002 (HY000) - csdn</a><br>执行<code>/etc/init.d/mysqld start</code> 发现这才提示mysql运行</p>
+<p>查看mysql服务状态，发现提示active(exited)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# systemctl status mysqld</span><br><span class="line">● mysqld.service - LSB: start and stop MySQL</span><br><span class="line">   Loaded: loaded (/etc/rc.d/init.d/mysqld)</span><br><span class="line">   Active: active (exited) since Fri 2018-08-03 09:37:17 CST; 3h 5min ago</span><br><span class="line">     Docs: man:systemd-sysv-generator(8)</span><br><span class="line">  Process: 24595 ExecStop=/etc/rc.d/init.d/mysqld stop (code=exited, status=0/SUCCESS)</span><br><span class="line">  Process: 26063 ExecStart=/etc/rc.d/init.d/mysqld start (code=exited, status=0/SUCCESS)</span><br></pre></td></tr></table></figure></p>
+<p>查找相关资料，参考<a href="https://unix.stackexchange.com/questions/241970/what-does-status-active-exited-mean-for-a-custom-service" target="_blank" rel="noopener">What does status “active (exited)” mean for a (custom) service?</a><br>Bram的回答”状态active（退出）表示systemd已成功运行命令，但它不知道有一个守护进程要监视。”<br>对比一个正常运行的mysql数据库发现，确实是服务配置有问题、<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 正常运行的mysql服务</span><br><span class="line">[root@knox ~]# systemctl status mysqld</span><br><span class="line">● mysqld.service - MySQL Server</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/mysqld.service; enabled; vendor preset: disabled)</span><br><span class="line">   Active: active (running) since Fri 2017-06-23 04:06:22 EDT; 1 years 1 months ago</span><br><span class="line">     Docs: man:mysqld(8)</span><br><span class="line">           http://dev.mysql.com/doc/refman/en/using-systemd.html</span><br><span class="line">  Process: 1144 ExecStart=/usr/sbin/mysqld --daemonize --pid-file=/var/run/mysqld/mysqld.pid $MYSQLD_OPTS (code=exited, status=0/SUCCESS)</span><br><span class="line">  Process: 1121 ExecStartPre=/usr/bin/mysqld_pre_systemd (code=exited, status=0/SUCCESS)</span><br><span class="line"> Main PID: 1782 (mysqld)</span><br><span class="line">   CGroup: /system.slice/mysqld.service</span><br><span class="line">           └─1782 /usr/sbin/mysqld --daemonize --pid-file=/var/run/mysqld/mysqld.pid</span><br></pre></td></tr></table></figure></p>
+<p>因此如果遇到相关问题，可以通过查看mysqld.service文件配置是否正确！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+	  
+	  <!-- 百度分享 Start -->
+	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+	  <!-- 百度分享 End -->
+	  
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
+
+	  
+<span>
+Updated:<time datetime="2018-08-03T13:13:50.883Z" itemprop="dateModified">2018-08-03</time>
+</span>
+
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/08/02/design-pattern01/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Java设计模式学习（一）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          
+  <div id="toc" class="toc-aside">
+  <h2 class="toc-title">Contents</h2>
+    
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用命令"><span class="toc-number">2.</span> <span class="toc-text">常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建mysql用户并设置密码"><span class="toc-number">2.1.</span> <span class="toc-text">创建mysql用户并设置密码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#给用户添加权限"><span class="toc-number">2.2.</span> <span class="toc-text">给用户添加权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除用户"><span class="toc-number">2.3.</span> <span class="toc-text">删除用户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取mysql存储路径"><span class="toc-number">2.4.</span> <span class="toc-text">获取mysql存储路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mysql可以运行成功但无法用命令登录的问题"><span class="toc-number">2.5.</span> <span class="toc-text">mysql可以运行成功但无法用命令登录的问题</span></a></li></ol></li></ol>
+    
+  </div>
+
+<aside id="sidebar">
+
+  
+    
+
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design-pattern/">design-pattern</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Hexo/" style="font-size: 20px; color: #1db400">Hexo</a> <a href="/tags/design-pattern/" style="font-size: 20px; color: #1db400">design-pattern</a> <a href="/tags/mysql/" style="font-size: 13px; color: #7dc3de">mysql</a>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/08/03/mysql-01/">mysql常用命令整理(一)</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/02/design-pattern01/">Java设计模式学习（一）</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/02/design-pattern00/">Java设计模式学习（0）</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/01/first/">Hexo Landscape-F主题Blog搭建</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/31/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+
+</aside>
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zhoufei<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and Theme by <a href="https://github.com/howiefh/hexo-theme-landscape-f" target="_blank" title="Landscape-F">Landscape-F</a>
+    
+      <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <br>
+      <span id="busuanzi_container_site_pv">
+        Total <span id="busuanzi_value_site_pv"></span> views.
+      </span><br>
+      <span id="busuanzi_container_site_uv">
+        本站访客数<span id="busuanzi_value_site_uv"></span>人次
+      </span>
+    
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<!-- 百度分享 start -->
+<!--
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","douban","bdysc","sqq","qq","hi","baidu","huaban","youdao","sdo","mail","xg","diandian","fx","copy","print"],"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='https://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+-->
+<!-- 百度分享 end -->
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<div class="bottom-btn">
+
+	<a class="icon-gotop" href="javascript:void(0)" title="返回顶部"></a>
+	<script src="/js/gotop.js"></script>
+
+
+	<a class="icon-toc-toggle" href="javascript:void(0)" title="文章目录"></a>
+	<script src="/js/toc_aside_toggle.js"></script>
+
+</div>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
