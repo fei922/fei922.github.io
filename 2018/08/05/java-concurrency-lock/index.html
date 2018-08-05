@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Java并发编程 lock | Leo&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言曾经感觉线程这个东西就像天书一样，晦涩难懂，然而今天以及上周天，跟着两篇博客，看了Java多线程相关知识，发现大牛们结合源码讲的很透彻。 慢慢发现，只要认真去看去学，理解起来也没有那么难。思而不学，一直局限于自己的定式思维里的话，怎么能进步呢。">
+<meta name="keywords" content="Java,多线程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java并发编程 lock">
+<meta property="og:url" content="https://fei922.github.io/2018/08/05/java-concurrency-lock/index.html">
+<meta property="og:site_name" content="Leo&#39;s Blog">
+<meta property="og:description" content="前言曾经感觉线程这个东西就像天书一样，晦涩难懂，然而今天以及上周天，跟着两篇博客，看了Java多线程相关知识，发现大牛们结合源码讲的很透彻。 慢慢发现，只要认真去看去学，理解起来也没有那么难。思而不学，一直局限于自己的定式思维里的话，怎么能进步呢。">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:updated_time" content="2018-08-05T09:11:22.376Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java并发编程 lock">
+<meta name="twitter:description" content="前言曾经感觉线程这个东西就像天书一样，晦涩难懂，然而今天以及上周天，跟着两篇博客，看了Java多线程相关知识，发现大牛们结合源码讲的很透彻。 慢慢发现，只要认真去看去学，理解起来也没有那么难。思而不学，一直局限于自己的定式思维里的话，怎么能进步呢。">
+  
+    <link rel="alternate" href="/atom.xml" title="Leo&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?47243f749252bb19a8513b675d5a7411";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Leo&#39;s Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Great things are done by a series of small things brought together</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-github-link" class="nav-icon" href="https://github.com/fei922" title="Github" target="_blank"></a>
+        
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://fei922.github.io"></form>
+      </div>
+    </div>
+  </div>
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?47243f749252bb19a8513b675d5a7411";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-java-concurrency-lock" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+<a href="/2018/08/05/java-concurrency-lock/" class="article-date">
+  <time datetime="2018-08-05T08:17:21.000Z" itemprop="datePublished">2018-08-05</time>
+</a>
+
+
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Java并发编程 lock
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+		
+		<div id="toc" class="toc-article">
+			<h2 class="toc-title"><span>Contents</span></h2>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#要点总结"><span class="toc-number">2.</span> <span class="toc-text">要点总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#synchronized的三种应用方式"><span class="toc-number">2.1.</span> <span class="toc-text">synchronized的三种应用方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java虚拟机对synchronized的优化"><span class="toc-number">2.2.</span> <span class="toc-text">Java虚拟机对synchronized的优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#synchronized的可重入性"><span class="toc-number">2.3.</span> <span class="toc-text">synchronized的可重入性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程中断两种情况"><span class="toc-number">2.4.</span> <span class="toc-text">线程中断两种情况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#synchronized和lock的区别"><span class="toc-number">2.5.</span> <span class="toc-text">synchronized和lock的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lock接口"><span class="toc-number">2.6.</span> <span class="toc-text">Lock接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ReentrantLock"><span class="toc-number">2.7.</span> <span class="toc-text">ReentrantLock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ReentrantReadWriteLock"><span class="toc-number">2.8.</span> <span class="toc-text">ReentrantReadWriteLock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#公平锁"><span class="toc-number">2.9.</span> <span class="toc-text">公平锁</span></a></li></ol></li></ol>
+		
+		</div>
+		
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>曾经感觉线程这个东西就像天书一样，晦涩难懂，<br>然而今天以及上周天，跟着两篇博客，看了Java多线程相关知识，发现大牛们结合源码讲的很透彻。</p>
+<p>慢慢发现，只要认真去看去学，理解起来也没有那么难。思而不学，一直局限于自己的定式思维里的话，怎么能进步呢。</p>
+<a id="more"></a>
+<p>先贴大牛博客</p>
+<p>参考资料:</p>
+<ul>
+<li><a href="https://www.cnblogs.com/dolphin0520/p/3923167.html" target="_blank" rel="noopener">ava并发编程：Lock</a></li>
+<li><a href="https://blog.csdn.net/javazejian/article/details/72828483" target="_blank" rel="noopener">深入理解Java并发之synchronized实现原理</a></li>
+</ul>
+<h2 id="要点总结"><a href="#要点总结" class="headerlink" title="要点总结"></a>要点总结</h2><blockquote>
+<p>线程安全是并发编程中的重要关注点，应该注意到的是，<br>造成线程安全问题的主要诱因有两点，<br>一是存在共享数据(也称临界资源)，<br>二是存在多条线程共同操作共享数据。<br>因此为了解决这个问题，我们可能需要这样一个方案，<br>当存在多个线程操作共享数据时，需要保证同一时刻有且只有一个线程在操作共享数据，<br>其他线程必须等到该线程处理完数据后再进行，这种方式有个高尚的名称叫互斥锁，<br>即能达到互斥访问目的的锁，也就是说当一个共享数据被当前正在访问的线程加上互斥锁后，<br>在同一个时刻，其他线程只能处于等待的状态，直到当前线程处理完毕释放该锁。<br>    – 摘自《深入理解Java并发之synchronized实现原理》一文</p>
+</blockquote>
+<h3 id="synchronized的三种应用方式"><a href="#synchronized的三种应用方式" class="headerlink" title="synchronized的三种应用方式"></a>synchronized的三种应用方式</h3><p>synchronized关键字是Java内置的，在 Java 中，关键字 synchronized可以保证在同一个时刻，<br>只有一个线程可以执行某个方法或者某个代码块(主要是对方法或者代码块中存在共享数据的操作)，<br>同时我们还应该注意到synchronized另外一个重要的作用，<br>synchronized可保证一个线程的变化(主要是共享数据的变化)被其他线程所看到（保证可见性，完全可以替代Volatile功能）</p>
+<ul>
+<li>修饰实例方法，作用于当前实例加锁，进入同步代码块前要获得当前实例的锁</li>
+<li>修改时静态方法，作用于当前类对象加锁，进入同步代码块前要获得当前类对象的锁</li>
+<li>修饰代码块，指定加锁对象，进入同步代码块前要获得给定对象的锁</li>
+</ul>
+<h3 id="Java虚拟机对synchronized的优化"><a href="#Java虚拟机对synchronized的优化" class="headerlink" title="Java虚拟机对synchronized的优化"></a>Java虚拟机对synchronized的优化</h3><p>锁的状态总共有四种，无锁状态、偏向锁、轻量级锁和重量级锁。随着锁的竞争，锁可以从偏向锁升级到轻量级锁，再升级的重量级锁，但是锁的升级是单向的，也就是说只能从低到高升级，不会出现锁的降级，关于重量级锁，前面我们已详细分析过，下面我们将介绍偏向锁和轻量级锁以及JVM的其他优化手段，这里并不打算深入到每个锁的实现和转换过程更多地是阐述Java虚拟机所提供的每个锁的核心优化思想，毕竟涉及到具体过程比较繁琐，如需了解详细过程可以查阅《深入理解Java虚拟机原理》。</p>
+<p>偏向锁<br>偏向锁是Java 6之后加入的新锁，它是一种针对加锁操作的优化手段，经过研究发现，在大多数情况下，锁不仅不存在多线程竞争，而且总是由同一线程多次获得，因此为了减少同一线程获取锁(会涉及到一些CAS操作,耗时)的代价而引入偏向锁。偏向锁的核心思想是，如果一个线程获得了锁，那么锁就进入偏向模式，此时Mark Word 的结构也变为偏向锁结构，当这个线程再次请求锁时，无需再做任何同步操作，即获取锁的过程，这样就省去了大量有关锁申请的操作，从而也就提供程序的性能。所以，对于没有锁竞争的场合，偏向锁有很好的优化效果，毕竟极有可能连续多次是同一个线程申请相同的锁。但是对于锁竞争比较激烈的场合，偏向锁就失效了，因为这样场合极有可能每次申请锁的线程都是不相同的，因此这种场合下不应该使用偏向锁，否则会得不偿失，需要注意的是，偏向锁失败后，并不会立即膨胀为重量级锁，而是先升级为轻量级锁。下面我们接着了解轻量级锁。</p>
+<p>轻量级锁<br>倘若偏向锁失败，虚拟机并不会立即升级为重量级锁，它还会尝试使用一种称为轻量级锁的优化手段(1.6之后加入的)，此时Mark Word 的结构也变为轻量级锁的结构。轻量级锁能够提升程序性能的依据是“对绝大部分的锁，在整个同步周期内都不存在竞争”，注意这是经验数据。需要了解的是，轻量级锁所适应的场景是线程交替执行同步块的场合，如果存在同一时间访问同一锁的场合，就会导致轻量级锁膨胀为重量级锁。</p>
+<p>自旋锁<br>轻量级锁失败后，虚拟机为了避免线程真实地在操作系统层面挂起，还会进行一项称为自旋锁的优化手段。这是基于在大多数情况下，线程持有锁的时间都不会太长，如果直接挂起操作系统层面的线程可能会得不偿失，毕竟操作系统实现线程之间的切换时需要从用户态转换到核心态，这个状态之间的转换需要相对比较长的时间，时间成本相对较高，因此自旋锁会假设在不久将来，当前的线程可以获得锁，因此虚拟机会让当前想要获取锁的线程做几个空循环(这也是称为自旋的原因)，一般不会太久，可能是50个循环或100循环，在经过若干次循环后，如果得到锁，就顺利进入临界区。如果还不能获得锁，那就会将线程在操作系统层面挂起，这就是自旋锁的优化方式，这种方式确实也是可以提升效率的。最后没办法也就只能升级为重量级锁了。</p>
+<p>锁消除<br>消除锁是虚拟机另外一种锁的优化，这种优化更彻底，Java虚拟机在JIT编译时(可以简单理解为当某段代码即将第一次被执行时进行编译，又称即时编译)，通过对运行上下文的扫描，去除不可能存在共享资源竞争的锁，通过这种方式消除没有必要的锁，可以节省毫无意义的请求锁时间，如下StringBuffer的append是一个同步方法，但是在add方法中的StringBuffer属于一个局部变量，并且不会被其他线程所使用，因此StringBuffer不可能存在共享资源竞争的情景，JVM会自动将其锁消除。</p>
+<h3 id="synchronized的可重入性"><a href="#synchronized的可重入性" class="headerlink" title="synchronized的可重入性"></a>synchronized的可重入性</h3><p>从互斥锁的设计上来说，当一个线程试图操作一个由其他线程持有的对象锁的临界资源时，将会处于阻塞状态，但当一个线程再次请求自己持有对象锁的临界资源时，这种情况属于重入锁，请求将会成功，在java中synchronized是基于原子性的内部锁机制，是可重入的，因此在一个线程调用synchronized方法的同时在其方法体内部调用该对象另一个synchronized方法，也就是说一个线程得到一个对象锁后再次请求该对象锁，是允许的，这就是synchronized的可重入性。</p>
+<h3 id="线程中断两种情况"><a href="#线程中断两种情况" class="headerlink" title="线程中断两种情况"></a>线程中断两种情况</h3><p>一种是当线程处于阻塞状态或者试图执行一个阻塞操作时，我们可以使用实例方法interrupt()进行线程中断，执行中断操作后将会抛出interruptException异常(该异常必须捕捉无法向外抛出)并将中断状态复位，另外一种是当线程处于运行状态时，我们也可调用实例方法interrupt()进行线程中断，但同时必须手动判断中断状态，并编写中断线程的代码(其实就是结束run方法体的代码)。</p>
+<h3 id="synchronized和lock的区别"><a href="#synchronized和lock的区别" class="headerlink" title="synchronized和lock的区别"></a>synchronized和lock的区别</h3><ol>
+<li><p>Lock是一个接口，而synchronized是Java中的关键字，synchronized是内置的语言实现；</p>
+</li>
+<li><p>synchronized在发生异常时，会自动释放线程占有的锁，因此不会导致死锁现象发生；而Lock在发生异常时，如果没有主动通过unLock()去释放锁，则很可能造成死锁现象，因此使用Lock时需要在finally块中释放锁；</p>
+</li>
+<li><p>Lock可以让等待锁的线程响应中断，而synchronized却不行，使用synchronized时，等待的线程会一直等待下去，不能够响应中断；</p>
+</li>
+<li><p>通过Lock可以知道有没有成功获取锁，而synchronized却无法办到。</p>
+</li>
+<li><p>Lock可以提高多个线程进行读操作的效率。</p>
+</li>
+</ol>
+<h3 id="Lock接口"><a href="#Lock接口" class="headerlink" title="Lock接口"></a>Lock接口</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public interface Lock &#123;</span><br><span class="line">    void lock();  // 获取锁，如果锁已经被其他线程获取，则进行等待</span><br><span class="line">    void lockInterruptibly() throws InterruptedException;  // 如果线程正在等待获取锁，则线程能够响应中断，即线程调用interrupt（）时可以中断线程的等待状态。</span><br><span class="line">    boolean tryLock();  // 尝试获取锁，如果得到锁，则返回true，如果获取失败，则立即返回false，不会等待</span><br><span class="line">    boolean tryLock(long time, TimeUnit unit) throws InterruptedException; // 和tryLock类似，但是获取不到会等待一段时间，如果等待时间内获取不到锁，会返回false</span><br><span class="line">    void unlock();</span><br><span class="line">    Condition newCondition();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意，当一个线程获取了锁之后，是不会被interrupt()方法中断的。因为本身在前面的文章中讲过单独调用interrupt()方法不能中断正在运行过程中的线程，只能中断阻塞过程中的线程。<br>因此当通过lockInterruptibly()方法获取某个锁时，如果不能获取到，只有进行等待的情况下，是可以响应中断的。<br>而用synchronized修饰的话，当一个线程处于等待某个锁的状态，是无法被中断的，只有一直等待下去</p>
+</blockquote>
+<h3 id="ReentrantLock"><a href="#ReentrantLock" class="headerlink" title="ReentrantLock"></a>ReentrantLock</h3><p>ReentrantLock，意思是“可重入锁”，关于可重入锁的概念在下一节讲述。ReentrantLock是唯一实现了Lock接口的类，并且ReentrantLock提供了更多的方法。</p>
+<h3 id="ReentrantReadWriteLock"><a href="#ReentrantReadWriteLock" class="headerlink" title="ReentrantReadWriteLock"></a>ReentrantReadWriteLock</h3><p>ReentrantReadWriteLock里面提供了很多丰富的方法，不过最主要的有两个方法：readLock()和writeLock()用来获取读锁和写锁。ReentrantReadWriteLock实现了ReadWriteLock接口。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">private ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();</span><br><span class="line">rwl.readLock().lock();    // 对应  rwl.readLock().unlock();  // 解锁最好放在finally里面 // 多个线程可以同时读</span><br><span class="line">rwl.writeLock().lock();   // 对应  rwl.writeLock().unlock();  // 如果多个线程请求 lock后面的方法，会阻塞</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>不过要注意的是，如果有一个线程已经占用了读锁，则此时其他线程如果要申请写锁，则申请写锁的线程会一直等待释放读锁。<br>如果有一个线程已经占用了写锁，则此时其他线程如果申请写锁或者读锁，则申请的线程会一直等待释放写锁。</p>
+</blockquote>
+<h3 id="公平锁"><a href="#公平锁" class="headerlink" title="公平锁"></a>公平锁</h3><p>公平锁即尽量以请求锁的顺序来获取锁。比如同是有多个线程在等待一个锁，当这个锁被释放时，等待时间最久的线程（最先请求的线程）会获得该所，这种就是公平锁。<br>（换句话说就是: 在并发环境中，每个线程在获取锁的时候，会先查看此锁维护的等待队列，如果队列为空，或者当前线程是队列的第一个，就占有锁，否则，就加入到等待队列中，以后会按照FIFO的规则从队列中取到自己）<br>非公平锁即无法保证锁的获取是按照请求锁的顺序进行的。这样就可能导致某个或者一些线程永远获取不到锁。</p>
+<p>在Java中，synchronized就是非公平锁，它无法保证等待的线程获取锁的顺序。<br>而对于ReentrantLock和ReentrantReadWriteLock，它默认情况下是非公平锁，但是可以设置为公平锁。</p>
+<p>在ReentrantLock中定义了2个静态内部类，一个是NotFairSync，一个是FairSync，分别用来实现非公平锁和公平锁。<br>我们可以在创建ReentrantLock对象时，通过以下方式来设置锁的公平性：</p>
+<pre><code>ReentrantLock lock = new ReentrantLock(true);
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+	  
+	  <!-- 百度分享 Start -->
+	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+	  <!-- 百度分享 End -->
+	  
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li></ul>
+
+	  
+<span>
+Updated:<time datetime="2018-08-05T09:11:22.376Z" itemprop="dateModified">2018-08-05</time>
+</span>
+
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/08/03/mysql-01/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">mysql常用命令整理(一)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          
+  <div id="toc" class="toc-aside">
+  <h2 class="toc-title">Contents</h2>
+    
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#要点总结"><span class="toc-number">2.</span> <span class="toc-text">要点总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#synchronized的三种应用方式"><span class="toc-number">2.1.</span> <span class="toc-text">synchronized的三种应用方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java虚拟机对synchronized的优化"><span class="toc-number">2.2.</span> <span class="toc-text">Java虚拟机对synchronized的优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#synchronized的可重入性"><span class="toc-number">2.3.</span> <span class="toc-text">synchronized的可重入性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程中断两种情况"><span class="toc-number">2.4.</span> <span class="toc-text">线程中断两种情况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#synchronized和lock的区别"><span class="toc-number">2.5.</span> <span class="toc-text">synchronized和lock的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lock接口"><span class="toc-number">2.6.</span> <span class="toc-text">Lock接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ReentrantLock"><span class="toc-number">2.7.</span> <span class="toc-text">ReentrantLock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ReentrantReadWriteLock"><span class="toc-number">2.8.</span> <span class="toc-text">ReentrantReadWriteLock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#公平锁"><span class="toc-number">2.9.</span> <span class="toc-text">公平锁</span></a></li></ol></li></ol>
+    
+  </div>
+
+<aside id="sidebar">
+
+  
+    
+
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design-pattern/">design-pattern</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Hexo/" style="font-size: 20px; color: #1db400">Hexo</a> <a href="/tags/Java/" style="font-size: 13px; color: #7dc3de">Java</a> <a href="/tags/design-pattern/" style="font-size: 20px; color: #1db400">design-pattern</a> <a href="/tags/mysql/" style="font-size: 13px; color: #7dc3de">mysql</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/08/05/java-concurrency-lock/">Java并发编程 lock</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/03/mysql-01/">mysql常用命令整理(一)</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/02/design-pattern01/">Java设计模式学习（一）</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/02/design-pattern00/">Java设计模式学习（0）</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/01/first/">Hexo Landscape-F主题Blog搭建</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+
+</aside>
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zhoufei<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and Theme by <a href="https://github.com/howiefh/hexo-theme-landscape-f" target="_blank" title="Landscape-F">Landscape-F</a>
+    
+      <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <br>
+      <span id="busuanzi_container_site_pv">
+        Total <span id="busuanzi_value_site_pv"></span> views.
+      </span><br>
+      <span id="busuanzi_container_site_uv">
+        本站访客数<span id="busuanzi_value_site_uv"></span>人次
+      </span>
+    
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<!-- 百度分享 start -->
+<!--
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","douban","bdysc","sqq","qq","hi","baidu","huaban","youdao","sdo","mail","xg","diandian","fx","copy","print"],"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='https://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+-->
+<!-- 百度分享 end -->
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<div class="bottom-btn">
+
+	<a class="icon-gotop" href="javascript:void(0)" title="返回顶部"></a>
+	<script src="/js/gotop.js"></script>
+
+
+	<a class="icon-toc-toggle" href="javascript:void(0)" title="文章目录"></a>
+	<script src="/js/toc_aside_toggle.js"></script>
+
+</div>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

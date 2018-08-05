@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Leo&#39;s Blog">
 <meta property="og:description" content="前言今天被拉到其他组支援，在Centos上部署mysql。领导提出了一些以前没有接触过的要求，get到一些新技能，抓紧记录一下哈哈">
 <meta property="og:locale" content="zh-cn">
-<meta property="og:updated_time" content="2018-08-03T13:13:50.883Z">
+<meta property="og:updated_time" content="2018-08-05T10:00:47.327Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql常用命令整理(一)">
 <meta name="twitter:description" content="前言今天被拉到其他组支援，在Centos上部署mysql。领导提出了一些以前没有接触过的要求，get到一些新技能，抓紧记录一下哈哈">
@@ -125,7 +125,7 @@ var _hmt = _hmt || [];
 		<div id="toc" class="toc-article">
 			<h2 class="toc-title"><span>Contents</span></h2>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用命令"><span class="toc-number">2.</span> <span class="toc-text">常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建mysql用户并设置密码"><span class="toc-number">2.1.</span> <span class="toc-text">创建mysql用户并设置密码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#给用户添加权限"><span class="toc-number">2.2.</span> <span class="toc-text">给用户添加权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除用户"><span class="toc-number">2.3.</span> <span class="toc-text">删除用户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取mysql存储路径"><span class="toc-number">2.4.</span> <span class="toc-text">获取mysql存储路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mysql可以运行成功但无法用命令登录的问题"><span class="toc-number">2.5.</span> <span class="toc-text">mysql可以运行成功但无法用命令登录的问题</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用命令"><span class="toc-number">2.</span> <span class="toc-text">常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建mysql用户并设置密码"><span class="toc-number">2.1.</span> <span class="toc-text">创建mysql用户并设置密码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#给用户添加权限"><span class="toc-number">2.2.</span> <span class="toc-text">给用户添加权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除用户"><span class="toc-number">2.3.</span> <span class="toc-text">删除用户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取mysql存储路径"><span class="toc-number">2.4.</span> <span class="toc-text">获取mysql存储路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mysql可以运行成功但无法用命令登录的问题"><span class="toc-number">2.5.</span> <span class="toc-text">mysql可以运行成功但无法用命令登录的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用命令批量导入sql文件"><span class="toc-number">2.6.</span> <span class="toc-text">使用命令批量导入sql文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建数据库并且指定编码utf8"><span class="toc-number">2.7.</span> <span class="toc-text">创建数据库并且指定编码utf8</span></a></li></ol></li></ol>
 		
 		</div>
 		
@@ -140,7 +140,14 @@ var _hmt = _hmt || [];
 <p>查看mysql服务状态，发现提示active(exited)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# systemctl status mysqld</span><br><span class="line">● mysqld.service - LSB: start and stop MySQL</span><br><span class="line">   Loaded: loaded (/etc/rc.d/init.d/mysqld)</span><br><span class="line">   Active: active (exited) since Fri 2018-08-03 09:37:17 CST; 3h 5min ago</span><br><span class="line">     Docs: man:systemd-sysv-generator(8)</span><br><span class="line">  Process: 24595 ExecStop=/etc/rc.d/init.d/mysqld stop (code=exited, status=0/SUCCESS)</span><br><span class="line">  Process: 26063 ExecStart=/etc/rc.d/init.d/mysqld start (code=exited, status=0/SUCCESS)</span><br></pre></td></tr></table></figure></p>
 <p>查找相关资料，参考<a href="https://unix.stackexchange.com/questions/241970/what-does-status-active-exited-mean-for-a-custom-service" target="_blank" rel="noopener">What does status “active (exited)” mean for a (custom) service?</a><br>Bram的回答”状态active（退出）表示systemd已成功运行命令，但它不知道有一个守护进程要监视。”<br>对比一个正常运行的mysql数据库发现，确实是服务配置有问题、<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 正常运行的mysql服务</span><br><span class="line">[root@knox ~]# systemctl status mysqld</span><br><span class="line">● mysqld.service - MySQL Server</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/mysqld.service; enabled; vendor preset: disabled)</span><br><span class="line">   Active: active (running) since Fri 2017-06-23 04:06:22 EDT; 1 years 1 months ago</span><br><span class="line">     Docs: man:mysqld(8)</span><br><span class="line">           http://dev.mysql.com/doc/refman/en/using-systemd.html</span><br><span class="line">  Process: 1144 ExecStart=/usr/sbin/mysqld --daemonize --pid-file=/var/run/mysqld/mysqld.pid $MYSQLD_OPTS (code=exited, status=0/SUCCESS)</span><br><span class="line">  Process: 1121 ExecStartPre=/usr/bin/mysqld_pre_systemd (code=exited, status=0/SUCCESS)</span><br><span class="line"> Main PID: 1782 (mysqld)</span><br><span class="line">   CGroup: /system.slice/mysqld.service</span><br><span class="line">           └─1782 /usr/sbin/mysqld --daemonize --pid-file=/var/run/mysqld/mysqld.pid</span><br></pre></td></tr></table></figure></p>
 <p>因此如果遇到相关问题，可以通过查看mysqld.service文件配置是否正确！</p>
-
+<p>2018-08-05 更~<br>昨天又有了新要求，记录下。</p>
+<h3 id="使用命令批量导入sql文件"><a href="#使用命令批量导入sql文件" class="headerlink" title="使用命令批量导入sql文件"></a>使用命令批量导入sql文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[mysql@localhost export-sql-stru-20180804]$ sqlfile=$(ls .); for sf in $&#123;sqlfile[@]&#125;;  do mysql -u root -p123456 databasename  &lt;  $sf; done</span><br><span class="line">Warning: Using a password on the command line interface can be insecure.</span><br><span class="line">Warning: Using a password on the command line interface can be insecure.</span><br><span class="line"> ...</span><br><span class="line"># 但是不知为什么使用非root用户，执行的话，就是提示拒绝访问，如下</span><br><span class="line">[mysql@localhost export-sql-stru-20180804]$ sqlfile=$(ls .); for sf in $&#123;sqlfile[@]&#125;;  do mysql -u otheruser -potheruserpwd databasename  &lt;  $sf; done</span><br><span class="line">Warning: Using a password on the command line interface can be insecure.</span><br><span class="line">ERROR 1045 (28000): Access denied for user &apos;otheruser&apos;@&apos;localhost&apos; (using password: YES)</span><br><span class="line"> </span><br><span class="line"> # 导出数据库</span><br><span class="line"> $ mysqldump -u root -p abc &gt;abc.sql</span><br><span class="line"> # 导入数据库，（指定用户以及密码）</span><br><span class="line"> mysql -u $dbUser -p$dbPassword -f $dbName -e &quot;source $f&quot;;</span><br></pre></td></tr></table></figure>
+<p>参考: </p>
+<ul>
+<li><a href="https://www.cnblogs.com/wangzun/p/6889247.html" target="_blank" rel="noopener">Linux下mysql命令 导入 导出sql文件</a></li>
+<li><a href="https://blog.csdn.net/qq_33877149/article/details/78951069" target="_blank" rel="noopener">linux下批量导入sql文件</a></li>
+</ul>
+<h3 id="创建数据库并且指定编码utf8"><a href="#创建数据库并且指定编码utf8" class="headerlink" title="创建数据库并且指定编码utf8"></a>创建数据库并且指定编码utf8</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE `mydb` CHARACTER SET utf8 COLLATE utf8_general_ci;</span><br><span class="line"># 要注意mydb使用反引号(`)(tab键上面那个键)引起来的，当然也可以直接不加反引号！！</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
@@ -154,7 +161,7 @@ var _hmt = _hmt || [];
 
 	  
 <span>
-Updated:<time datetime="2018-08-03T13:13:50.883Z" itemprop="dateModified">2018-08-03</time>
+Updated:<time datetime="2018-08-05T10:00:47.327Z" itemprop="dateModified">2018-08-05</time>
 </span>
 
 
@@ -163,6 +170,15 @@ Updated:<time datetime="2018-08-03T13:13:50.883Z" itemprop="dateModified">2018-0
   
     
 <nav id="article-nav">
+  
+    <a href="/2018/08/05/java-concurrency-lock/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Java并发编程 lock
+        
+      </div>
+    </a>
   
   
     <a href="/2018/08/02/design-pattern01/" id="article-nav-older" class="article-nav-link-wrap">
@@ -181,7 +197,7 @@ Updated:<time datetime="2018-08-03T13:13:50.883Z" itemprop="dateModified">2018-0
   <div id="toc" class="toc-aside">
   <h2 class="toc-title">Contents</h2>
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用命令"><span class="toc-number">2.</span> <span class="toc-text">常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建mysql用户并设置密码"><span class="toc-number">2.1.</span> <span class="toc-text">创建mysql用户并设置密码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#给用户添加权限"><span class="toc-number">2.2.</span> <span class="toc-text">给用户添加权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除用户"><span class="toc-number">2.3.</span> <span class="toc-text">删除用户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取mysql存储路径"><span class="toc-number">2.4.</span> <span class="toc-text">获取mysql存储路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mysql可以运行成功但无法用命令登录的问题"><span class="toc-number">2.5.</span> <span class="toc-text">mysql可以运行成功但无法用命令登录的问题</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用命令"><span class="toc-number">2.</span> <span class="toc-text">常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建mysql用户并设置密码"><span class="toc-number">2.1.</span> <span class="toc-text">创建mysql用户并设置密码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#给用户添加权限"><span class="toc-number">2.2.</span> <span class="toc-text">给用户添加权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除用户"><span class="toc-number">2.3.</span> <span class="toc-text">删除用户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取mysql存储路径"><span class="toc-number">2.4.</span> <span class="toc-text">获取mysql存储路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mysql可以运行成功但无法用命令登录的问题"><span class="toc-number">2.5.</span> <span class="toc-text">mysql可以运行成功但无法用命令登录的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用命令批量导入sql文件"><span class="toc-number">2.6.</span> <span class="toc-text">使用命令批量导入sql文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建数据库并且指定编码utf8"><span class="toc-number">2.7.</span> <span class="toc-text">创建数据库并且指定编码utf8</span></a></li></ol></li></ol>
     
   </div>
 
@@ -198,7 +214,7 @@ Updated:<time datetime="2018-08-03T13:13:50.883Z" itemprop="dateModified">2018-0
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design-pattern/">design-pattern</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design-pattern/">design-pattern</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -208,7 +224,7 @@ Updated:<time datetime="2018-08-03T13:13:50.883Z" itemprop="dateModified">2018-0
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Hexo/" style="font-size: 20px; color: #1db400">Hexo</a> <a href="/tags/design-pattern/" style="font-size: 20px; color: #1db400">design-pattern</a> <a href="/tags/mysql/" style="font-size: 13px; color: #7dc3de">mysql</a>
+      <a href="/tags/Hexo/" style="font-size: 20px; color: #1db400">Hexo</a> <a href="/tags/Java/" style="font-size: 13px; color: #7dc3de">Java</a> <a href="/tags/design-pattern/" style="font-size: 20px; color: #1db400">design-pattern</a> <a href="/tags/mysql/" style="font-size: 13px; color: #7dc3de">mysql</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a>
     </div>
   </div>
 
@@ -218,7 +234,7 @@ Updated:<time datetime="2018-08-03T13:13:50.883Z" itemprop="dateModified">2018-0
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -229,6 +245,10 @@ Updated:<time datetime="2018-08-03T13:13:50.883Z" itemprop="dateModified">2018-0
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/08/05/java-concurrency-lock/">Java并发编程 lock</a>
+          </li>
         
           <li>
             <a href="/2018/08/03/mysql-01/">mysql常用命令整理(一)</a>
@@ -244,10 +264,6 @@ Updated:<time datetime="2018-08-03T13:13:50.883Z" itemprop="dateModified">2018-0
         
           <li>
             <a href="/2018/08/01/first/">Hexo Landscape-F主题Blog搭建</a>
-          </li>
-        
-          <li>
-            <a href="/2018/07/31/hello-world/">Hello World</a>
           </li>
         
       </ul>
