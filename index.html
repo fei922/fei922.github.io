@@ -93,6 +93,204 @@ var _hmt = _hmt || [];
       <div class="outer">
         <section id="main">
   
+    <article id="post-java-install" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+<a href="/2018/09/02/java-install/" class="article-date">
+  <time datetime="2018-09-02T11:56:21.000Z" itemprop="datePublished">2018-09-02</time>
+</a>
+
+
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/02/java-install/">Java 安装</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+		
+		<div id="toc" class="toc-article">
+			<h2 class="toc-title"><span>Contents</span></h2>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Centos-中安装jdk"><span class="toc-number">1.</span> <span class="toc-text">Centos 中安装jdk</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#获取安装包"><span class="toc-number">1.0.1.</span> <span class="toc-text">获取安装包</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#准备"><span class="toc-number">1.0.2.</span> <span class="toc-text">准备</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#设置环境变量"><span class="toc-number">1.0.3.</span> <span class="toc-text">设置环境变量</span></a></li></ol></li></ol></li></ol>
+		
+		</div>
+		
+        <a id="more"></a>
+<h3 id="Centos-中安装jdk"><a href="#Centos-中安装jdk" class="headerlink" title="Centos 中安装jdk"></a>Centos 中安装jdk</h3><h5 id="获取安装包"><a href="#获取安装包" class="headerlink" title="获取安装包"></a>获取安装包</h5><p>从<a href="https://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank" rel="noopener">orcle 官网</a>下载所需版本的jdk</p>
+<p>本文以jdk1.8.0_121为例</p>
+<h5 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h5><ol>
+<li>上传下载包”jdk-8u121-linux-x64.tar.gz”到服务器</li>
+<li>解压<code>tar jdk-8u121-linux-x64.tar.gz</code></li>
+<li>将解压后的目录移动到”/usr/local”目录 <code>mv jdk1.8.0_121/ /usr/local/</code></li>
+</ol>
+<h5 id="设置环境变量"><a href="#设置环境变量" class="headerlink" title="设置环境变量"></a>设置环境变量</h5><ol>
+<li><p>创建”java.sh”</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost data]# vi java.sh</span><br><span class="line">export JAVA_HOME=/usr/local/jdk1.8.0_121/</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加可执行权限<code>chmod +x java.sh</code></p>
+</li>
+<li><p>移动到profile.d目录下<code>mv java.sh /etc/profile.d/</code></p>
+</li>
+<li><p>使环境变量生效，并验证安装是否成功</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost data]# source /etc/profile</span><br><span class="line">[root@localhost data]# java -version</span><br><span class="line">java version &quot;1.8.0_121&quot;</span><br><span class="line">Java(TM) SE Runtime Environment (build 1.8.0_121-b13)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.121-b13, mixed mode)</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+	  
+	  <a data-url="https://fei922.github.io/2018/09/02/java-install/" data-id="cjlmval9y000bq8va214dqe4f" data_title="Java 安装" data_summary="
+Centos 中安装jdk获取安装包从orcle 官..." class="article-share-link">Share</a>
+      
+
+	  
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+	  
+<span>
+Updated:<time datetime="2018-09-02T12:32:32.914Z" itemprop="dateModified">2018-09-02</time>
+</span>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-zeppelin-01" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+<a href="/2018/08/31/zeppelin-01/" class="article-date">
+  <time datetime="2018-08-31T06:02:36.000Z" itemprop="datePublished">2018-08-31</time>
+</a>
+
+
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/31/zeppelin-01/">zeppelin-01</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>基于zeppelin 0.8</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><a href="http://zeppelin.apache.org/docs/0.8.0/quickstart/install.html" target="_blank" rel="noopener">zeppelin官方文档</a></li>
+</ul>
+<h3 id="什么是zeppelin？"><a href="#什么是zeppelin？" class="headerlink" title="什么是zeppelin？"></a>什么是zeppelin？</h3><blockquote>
+<p>Apache Zeppelin 是一个让交互式数据分析变得可行的基于网页的开源框架。<br>Zeppelin提供了数据分析、数据可视化等功能。<br>Zeppelin 是一个提供交互数据分析且基于Web的笔记本。<br>方便你做出可数据驱动的、可交互且可协作的精美文档，并且支持多种语言，包括 Scala(使用 Apache Spark)、Python(Apache Spark)、SparkSQL、 Hive、 Markdown、Shell等等。<br>                    – <a href="https://baike.baidu.com/item/Zeppelin/17544169?fr=aladdin" target="_blank" rel="noopener">百度百科-Zeppelin</a></p>
+</blockquote>
+        
+          <p class="article-more-link">
+            <a href="/2018/08/31/zeppelin-01/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+	  
+	  <a data-url="https://fei922.github.io/2018/08/31/zeppelin-01/" data-id="cjlmval9r0009q8va8cww4rq1" data_title="zeppelin-01" data_summary="前言基于zeppelin 0.8
+参考资料
+zeppe..." class="article-share-link">Share</a>
+      
+
+	  
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/zeppelin/">zeppelin</a></li></ul>
+
+	  
+<span>
+Updated:<time datetime="2018-09-03T08:58:52.654Z" itemprop="dateModified">2018-09-03</time>
+</span>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-java集合框架-List" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+<a href="/2018/08/16/java集合框架-List/" class="article-date">
+  <time datetime="2018-08-15T23:06:38.000Z" itemprop="datePublished">2018-08-16</time>
+</a>
+
+
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/16/java集合框架-List/">java集合框架(一) List</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2>
+        
+          <p class="article-more-link">
+            <a href="/2018/08/16/java集合框架-List/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+	  
+	  <a data-url="https://fei922.github.io/2018/08/16/java集合框架-List/" data-id="cjlmvalb6000cq8vat9xrdkij" data_title="java集合框架(一) List" data_summary="前言  
+参考资料
+Java 集合系列08之 List..." class="article-share-link">Share</a>
+      
+
+	  
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/集合框架/">集合框架</a></li></ul>
+
+	  
+<span>
+Updated:<time datetime="2018-08-16T23:30:13.338Z" itemprop="dateModified">2018-08-17</time>
+</span>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-java-concurrency-lock" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     
@@ -129,7 +327,7 @@ var _hmt = _hmt || [];
     </div>
     <footer class="article-footer">
 	  
-	  <a data-url="https://fei922.github.io/2018/08/05/java-concurrency-lock/" data-id="cjki3vyvh0003b4va2s3umax0" data_title="Java并发编程 lock" data_summary="前言曾经感觉线程这个东西就像天书一样，晦涩难懂，然而今..." class="article-share-link">Share</a>
+	  <a data-url="https://fei922.github.io/2018/08/05/java-concurrency-lock/" data-id="cjlmval6d0000q8vaqt3ou18k" data_title="Java并发编程 lock" data_summary="前言曾经感觉线程这个东西就像天书一样，晦涩难懂，然而今..." class="article-share-link">Share</a>
       
 
 	  
@@ -184,7 +382,7 @@ Updated:<time datetime="2018-08-05T09:11:22.376Z" itemprop="dateModified">2018-0
     </div>
     <footer class="article-footer">
 	  
-	  <a data-url="https://fei922.github.io/2018/08/03/mysql-01/" data-id="cjki3vyv80001b4vaykvhl4th" data_title="mysql常用命令整理(一)" data_summary="前言今天被拉到其他组支援，在Centos上部署mysq..." class="article-share-link">Share</a>
+	  <a data-url="https://fei922.github.io/2018/08/03/mysql-01/" data-id="cjlmvalbg000eq8vat6s4yzen" data_title="mysql常用命令整理(一)" data_summary="前言今天被拉到其他组支援，在Centos上部署mysq..." class="article-share-link">Share</a>
       
 
 	  
@@ -244,7 +442,7 @@ Updated:<time datetime="2018-08-06T02:11:33.003Z" itemprop="dateModified">2018-0
     </div>
     <footer class="article-footer">
 	  
-	  <a data-url="https://fei922.github.io/2018/08/02/design-pattern01/" data-id="cjki3vyuu0000b4vafzbb5mqs" data_title="Java设计模式学习（一）" data_summary="singleton单例模式
+	  <a data-url="https://fei922.github.io/2018/08/02/design-pattern01/" data-id="cjlmval7t0001q8var4x6k52i" data_title="Java设计模式学习（一）" data_summary="singleton单例模式
 不啰嗦，上代码 
 " class="article-share-link">Share</a>
       
@@ -303,7 +501,7 @@ Updated:<time datetime="2018-08-02T16:15:11.662Z" itemprop="dateModified">2018-0
     </div>
     <footer class="article-footer">
 	  
-	  <a data-url="https://fei922.github.io/2018/08/02/design-pattern00/" data-id="cjki3vyvq0005b4va5nvwwgkp" data_title="Java设计模式学习（0）" data_summary="前言
+	  <a data-url="https://fei922.github.io/2018/08/02/design-pattern00/" data-id="cjlmvalbk000hq8valdvzipxn" data_title="Java设计模式学习（0）" data_summary="前言
 设计模式(Design Pattern)是一套被..." class="article-share-link">Share</a>
       
 
@@ -361,7 +559,7 @@ Updated:<time datetime="2018-08-03T00:43:05.334Z" itemprop="dateModified">2018-0
     </div>
     <footer class="article-footer">
 	  
-	  <a data-url="https://fei922.github.io/2018/08/01/first/" data-id="cjki3vyvt0008b4vaz80o6zl9" data_title="Hexo Landscape-F主题Blog搭建" data_summary="前言这两天心血来潮，想自己搭建一个blog，以便养成记..." class="article-share-link">Share</a>
+	  <a data-url="https://fei922.github.io/2018/08/01/first/" data-id="cjlmvalbu000iq8va8ei52o8o" data_title="Hexo Landscape-F主题Blog搭建" data_summary="前言这两天心血来潮，想自己搭建一个blog，以便养成记..." class="article-share-link">Share</a>
       
 
 	  
@@ -416,7 +614,7 @@ Updated:<time datetime="2018-08-02T15:07:09.544Z" itemprop="dateModified">2018-0
     </div>
     <footer class="article-footer">
 	  
-	  <a data-url="https://fei922.github.io/2018/07/31/hello-world/" data-id="cjki3vyvk0004b4varynxlnx5" data_title="Hello World" data_summary="Welcome to Hexo! This is yo..." class="article-share-link">Share</a>
+	  <a data-url="https://fei922.github.io/2018/07/31/hello-world/" data-id="cjlmval9m0008q8vau6l923x1" data_title="Hello World" data_summary="Welcome to Hexo! This is yo..." class="article-share-link">Share</a>
       
 
 	  
@@ -454,7 +652,7 @@ Updated:<time datetime="2018-08-02T05:12:46.695Z" itemprop="dateModified">2018-0
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design-pattern/">design-pattern</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design-pattern/">design-pattern</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zeppelin/">zeppelin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集合框架/">集合框架</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -464,7 +662,7 @@ Updated:<time datetime="2018-08-02T05:12:46.695Z" itemprop="dateModified">2018-0
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Hexo/" style="font-size: 20px; color: #1db400">Hexo</a> <a href="/tags/Java/" style="font-size: 13px; color: #7dc3de">Java</a> <a href="/tags/design-pattern/" style="font-size: 20px; color: #1db400">design-pattern</a> <a href="/tags/mysql/" style="font-size: 13px; color: #7dc3de">mysql</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a>
+      <a href="/tags/Hexo/" style="font-size: 16.5px; color: #4dbc6f">Hexo</a> <a href="/tags/Java/" style="font-size: 20px; color: #1db400">Java</a> <a href="/tags/design-pattern/" style="font-size: 16.5px; color: #4dbc6f">design-pattern</a> <a href="/tags/mysql/" style="font-size: 13px; color: #7dc3de">mysql</a> <a href="/tags/zeppelin/" style="font-size: 13px; color: #7dc3de">zeppelin</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/集合框架/" style="font-size: 13px; color: #7dc3de">集合框架</a>
     </div>
   </div>
 
@@ -474,7 +672,7 @@ Updated:<time datetime="2018-08-02T05:12:46.695Z" itemprop="dateModified">2018-0
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -487,23 +685,23 @@ Updated:<time datetime="2018-08-02T05:12:46.695Z" itemprop="dateModified">2018-0
       <ul>
         
           <li>
+            <a href="/2018/09/02/java-install/">Java 安装</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/31/zeppelin-01/">zeppelin-01</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/16/java集合框架-List/">java集合框架(一) List</a>
+          </li>
+        
+          <li>
             <a href="/2018/08/05/java-concurrency-lock/">Java并发编程 lock</a>
           </li>
         
           <li>
             <a href="/2018/08/03/mysql-01/">mysql常用命令整理(一)</a>
-          </li>
-        
-          <li>
-            <a href="/2018/08/02/design-pattern01/">Java设计模式学习（一）</a>
-          </li>
-        
-          <li>
-            <a href="/2018/08/02/design-pattern00/">Java设计模式学习（0）</a>
-          </li>
-        
-          <li>
-            <a href="/2018/08/01/first/">Hexo Landscape-F主题Blog搭建</a>
           </li>
         
       </ul>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>java集合框架(一) List | Leo&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言">
+<meta name="keywords" content="Java,集合框架">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java集合框架(一) List">
+<meta property="og:url" content="https://fei922.github.io/2018/08/16/java集合框架-List/index.html">
+<meta property="og:site_name" content="Leo&#39;s Blog">
+<meta property="og:description" content="前言">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="https://fei922.github.io/2018/08/16/images/02_java_集合架构.png">
+<meta property="og:updated_time" content="2018-08-16T23:30:13.338Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java集合框架(一) List">
+<meta name="twitter:description" content="前言">
+<meta name="twitter:image" content="https://fei922.github.io/2018/08/16/images/02_java_集合架构.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Leo&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?47243f749252bb19a8513b675d5a7411";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Leo&#39;s Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Great things are done by a series of small things brought together</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-github-link" class="nav-icon" href="https://github.com/fei922" title="Github" target="_blank"></a>
+        
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://fei922.github.io"></form>
+      </div>
+    </div>
+  </div>
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?47243f749252bb19a8513b675d5a7411";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-java集合框架-List" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+<a href="/2018/08/16/java集合框架-List/" class="article-date">
+  <time datetime="2018-08-15T23:06:38.000Z" itemprop="datePublished">2018-08-16</time>
+</a>
+
+
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      java集合框架(一) List
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+		
+		<div id="toc" class="toc-article">
+			<h2 class="toc-title"><span>Contents</span></h2>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">2.</span> <span class="toc-text">参考资料</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#List集合"><span class="toc-number">3.</span> <span class="toc-text">List集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LinkedList和ArrayList区别"><span class="toc-number">4.</span> <span class="toc-text">LinkedList和ArrayList区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ArrayList和Vector的区别"><span class="toc-number">5.</span> <span class="toc-text">ArrayList和Vector的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ArrayList-总结"><span class="toc-number">6.</span> <span class="toc-text">ArrayList 总结</span></a></li></ol>
+		
+		</div>
+		
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><a id="more"></a>  
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="https://www.cnblogs.com/skywang12345/p/3308900.html" target="_blank" rel="noopener">Java 集合系列08之 List总结(LinkedList, ArrayList等使用场景和性能分析)</a></li>
+</ul>
+<h2 id="List集合"><a href="#List集合" class="headerlink" title="List集合"></a>List集合</h2><p><img src="../images/02_java_集合架构.png" alt="java集合框架-list架构图"></p>
+<p>1) List是一个接口，它继承于Collection接口，代表有序队列。<br>2) AbstractList是一个抽象类，继承于AbstractCollection，AbstractList实现了List接口中除了size()、get(int location)之外的所有接口。<br>3) AbstractSequentialList是一个抽象类，继承于AbstractList。AbstarctSequentialList实现了链表中根据索引值操作链表的所有操作。<br>4) ArrayList, LinkedList, Vector, Stack是List的4个实现类。<br>   ArrayList底层由数组实现，随机访问效率高（直接访问数组索引），随机插入、删除效率低(元素个数变化，操作位置之后的所有元素索引都要发生改变)。<br>   LinkedList是一个双向链表(前驱、后继、当前元素的值)。它可以被当做堆栈、队列或双端队列进行操作。随机访问效率低(要根据上个元素的后继，一个一个地查找)，随机插入、删除效率高(在第i个位置插入一个元素，先要查找该元素，然后把该元素的前驱指定为添加元素，该元素的原来的前驱为插入元素的前驱)<br>   Vector是一个矢量队列，底层由数组实现，与ArrayList不同的是，它的方法上多数都加了synchronized修饰，是线程安全的。<br>   Stack是栈，继承自Vector，先进后出FILO</p>
+<h2 id="LinkedList和ArrayList区别"><a href="#LinkedList和ArrayList区别" class="headerlink" title="LinkedList和ArrayList区别"></a>LinkedList和ArrayList区别</h2><p>对于需要快速插入，删除元素，应该使用LinkedList。<br>对于需要快速随机访问元素，应该使用ArrayList。</p>
+<p>差异分析：</p>
+<pre><code>插入元素
+通过add(int index, E element)向LinkedList插入元素时。先是在双向链表中找到要插入节点的位置index；找到之后，再插入一个新节点。
+双向链表查找index位置的节点时，有一个加速动作：若index &lt; 双向链表长度的1/2，则从前向后查找; 否则，从后向前查找。
+ensureCapacity(size+1) 的作用是“确认ArrayList的容量，若容量不够，则增加容量。”
+真正耗时的操作是 System.arraycopy(elementData, index, elementData, index + 1, size - index);
+
+Sun JDK包的java/lang/System.java中的arraycopy()声明如下：
+
+public static native void arraycopy(Object src, int srcPos, Object dest, int destPos, int length);
+arraycopy()是个JNI函数，它是在JVM中实现的。sunJDK中看不到源码，不过可以在OpenJDK包中看到的源码。网上有对arraycopy()的分析说明，
+实际上，我们只需要了解： System.arraycopy(elementData, index, elementData, index + 1, size - index); 会移动index之后所有元素即可。
+这就意味着，ArrayList的add(int index, E element)函数，会引起index之后所有元素的改变！
+
+随机访问元素
+通过get(int index)获取LinkedList第index个元素时。先是在双向链表中找到要index位置的元素；找到之后再返回。
+双向链表查找index位置的节点时，有一个加速动作：若index &lt; 双向链表长度的1/2，则从前向后查找; 否则，从后向前查找。
+
+通过get(int index)获取ArrayList第index个元素时。直接返回数组中index位置的元素，而不需要像LinkedList一样进行查找。
+</code></pre><h2 id="ArrayList和Vector的区别"><a href="#ArrayList和Vector的区别" class="headerlink" title="ArrayList和Vector的区别"></a>ArrayList和Vector的区别</h2><ul>
+<li>线程安全性不一样<br> ArrayList是非线程安全；<br> 而Vector是线程安全的，它的函数都是synchronized的，即都是支持同步的。<br> ArrayList适用于单线程，Vector适用于多线程。</li>
+<li>构造函数个数不同<br> ArrayList有3个构造函数，而Vector有4个构造函数。Vector除了包括和ArrayList类似的3个构造函数之外，另外的一个构造函数可以指定容量增加系数。</li>
+<li>容量增加方式不同<br> 逐个添加元素时，若ArrayList容量不足时，“新的容量”=“(原始容量x3)/2 + 1”。<br> 而Vector的容量增长与“增长系数有关”，若指定了“增长系数”，且“增长系数有效(即，大于0)”；那么，每次容量不足时，“新的容量”=“原始容量+增长系数”。若增长系数无效(即，小于/等于0)，则“新的容量”=“原始容量 x 2”。</li>
+<li>对Enumeration的支持不同。Vector支持通过Enumeration去遍历，而List不支持   </li>
+</ul>
+<h2 id="ArrayList-总结"><a href="#ArrayList-总结" class="headerlink" title="ArrayList 总结"></a>ArrayList 总结</h2><p>ArrayList包含了两个重要的对象：elementData 和 size。</p>
+<p>(01) elementData 是”Object[]类型的数组”，它保存了添加到ArrayList中的元素。实际上，elementData是个动态数组，我们能通过构造函数 ArrayList(int initialCapacity)来执行它的初始容量为initialCapacity；如果通过不含参数的构造函数ArrayList()来创建ArrayList，则elementData的容量默认是10。elementData数组的大小会根据ArrayList容量的增长而动态的增长，具体的增长方式，请参考源码分析中的ensureCapacity()函数。</p>
+<p>(02) size 则是动态数组的实际大小。</p>
+<p>(01) ArrayList 实际上是通过一个数组去保存数据的。当我们构造ArrayList时；若使用默认构造函数，则ArrayList的默认容量大小是10。<br>(02) 当ArrayList容量不足以容纳全部元素时，ArrayList会重新设置容量：新的容量=“(原始容量x3)/2 + 1”。<br>(03) ArrayList的克隆函数，即是将全部元素克隆到一个数组中。<br>(04) ArrayList实现java.io.Serializable的方式。当写入到输出流时，先写入“容量”，再依次写入“每一个元素”；当读出输入流时，先读取“容量”，再依次读取“每一个元素”。</p>
+<p>** 插曲 向上转型和向下转型</p>
+<p>1、把子类对象直接赋给父类引用叫upcasting向上转型，向上转型不用强制转型。</p>
+<p>　　 如Father father = new Son();</p>
+<p>2、把指向子类对象的父类引用赋给子类引用叫向下转型（downcasting），要强制转型,要向下转型，必须先向上转型为了安全可以用instanceof判断。</p>
+<p>　　 如father就是一个指向子类对象的父类引用，把father赋给子类引用son 即Son son =（Son）father；</p>
+<p>　　 其中father前面的（Son）必须添加，进行强制转换。</p>
+<p>3、upcasting 会丢失子类特有的方法,但是子类overriding 父类的方法，子类方法有效，向上转型只能引用父类对象的属性，要引用子类对象属性，则要写getter函数。</p>
+<p>4、向上转型的作用，减少重复代码，父类为参数，调有时用子类作为参数，就是利用了向上转型。这样使代码变得简洁。体现了JAVA的抽象编程思想。</p>
+<p>参考<a href="https://www.cnblogs.com/buptldf/p/4959480.html" target="_blank" rel="noopener">java 向上转型和向下转型</a></p>
+<p>** System.arrayCopy()与Arrays.copyOf()的区别</p>
+<p><a href="https://www.cnblogs.com/LiuYuXuanIsSoGood/p/7923268.html" target="_blank" rel="noopener">论java中System.arrayCopy()与Arrays.copyOf()的区别</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+	  
+	  <!-- 百度分享 Start -->
+	  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+	  <!-- 百度分享 End -->
+	  
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/集合框架/">集合框架</a></li></ul>
+
+	  
+<span>
+Updated:<time datetime="2018-08-16T23:30:13.338Z" itemprop="dateModified">2018-08-17</time>
+</span>
+
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/08/31/zeppelin-01/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          zeppelin-01
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/08/05/java-concurrency-lock/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Java并发编程 lock</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          
+  <div id="toc" class="toc-aside">
+  <h2 class="toc-title">Contents</h2>
+    
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">2.</span> <span class="toc-text">参考资料</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#List集合"><span class="toc-number">3.</span> <span class="toc-text">List集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LinkedList和ArrayList区别"><span class="toc-number">4.</span> <span class="toc-text">LinkedList和ArrayList区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ArrayList和Vector的区别"><span class="toc-number">5.</span> <span class="toc-text">ArrayList和Vector的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ArrayList-总结"><span class="toc-number">6.</span> <span class="toc-text">ArrayList 总结</span></a></li></ol>
+    
+  </div>
+
+<aside id="sidebar">
+
+  
+    
+
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design-pattern/">design-pattern</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zeppelin/">zeppelin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集合框架/">集合框架</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Hexo/" style="font-size: 16.5px; color: #4dbc6f">Hexo</a> <a href="/tags/Java/" style="font-size: 20px; color: #1db400">Java</a> <a href="/tags/design-pattern/" style="font-size: 16.5px; color: #4dbc6f">design-pattern</a> <a href="/tags/mysql/" style="font-size: 13px; color: #7dc3de">mysql</a> <a href="/tags/zeppelin/" style="font-size: 13px; color: #7dc3de">zeppelin</a> <a href="/tags/多线程/" style="font-size: 13px; color: #7dc3de">多线程</a> <a href="/tags/集合框架/" style="font-size: 13px; color: #7dc3de">集合框架</a>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/09/02/java-install/">Java 安装</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/31/zeppelin-01/">zeppelin-01</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/16/java集合框架-List/">java集合框架(一) List</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/05/java-concurrency-lock/">Java并发编程 lock</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/03/mysql-01/">mysql常用命令整理(一)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+
+</aside>
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zhoufei<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and Theme by <a href="https://github.com/howiefh/hexo-theme-landscape-f" target="_blank" title="Landscape-F">Landscape-F</a>
+    
+      <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <br>
+      <span id="busuanzi_container_site_pv">
+        Total <span id="busuanzi_value_site_pv"></span> views.
+      </span><br>
+      <span id="busuanzi_container_site_uv">
+        本站访客数<span id="busuanzi_value_site_uv"></span>人次
+      </span>
+    
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<!-- 百度分享 start -->
+<!--
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","douban","bdysc","sqq","qq","hi","baidu","huaban","youdao","sdo","mail","xg","diandian","fx","copy","print"],"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='https://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+-->
+<!-- 百度分享 end -->
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<div class="bottom-btn">
+
+	<a class="icon-gotop" href="javascript:void(0)" title="返回顶部"></a>
+	<script src="/js/gotop.js"></script>
+
+
+	<a class="icon-toc-toggle" href="javascript:void(0)" title="文章目录"></a>
+	<script src="/js/toc_aside_toggle.js"></script>
+
+</div>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
